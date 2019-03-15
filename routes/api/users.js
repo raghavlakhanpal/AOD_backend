@@ -13,7 +13,10 @@ const router=express.Router();
 
 //settig up routes of requests
 
-
+//route -> GET/api/users/test
+router.get("/test",(req,res)=>{
+    res.json({message:"route works!!"})
+})
 
 
 //making the router accessible to other files
