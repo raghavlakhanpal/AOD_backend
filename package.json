@@ -2,7 +2,7 @@
   "name": "aod_backend",
   "version": "1.0.0",
   "description": "a site for developers to hang out.",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
