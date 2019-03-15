@@ -39,4 +39,4 @@ app.use("/api/users",users);
 const port=process.env.PORT || 5000;
 
 //establishig connection
-app.listen(port,()=>console.log(`server is now running on port ${port}.`));
+app.listen(port,()=>console.log(`server is now running on port ${port}`));

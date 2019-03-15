@@ -1,9 +1,8 @@
 //importing packages
 const mongoose=require("mongoose");
 const express=require("express");
-
-const jwtStrategy=require("passport-jwt").Strategy;
-const extractJwt=require("passport-jwt").ExtractJwt;
+const JwtStrategy=require("passport-jwt").Strategy;
+const ExtractJwt=require("passport-jwt").ExtractJwt;
 
 
 //importing files
@@ -13,19 +12,20 @@ const Key=require("./../config/keys");
 //var to store token and secretOrKey
 const opts={};
 
-opts.token=extractJwt.fromAuthHeaderAsBearerToken();
+opts.jwtFromRequest=ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey=Key.secretOrKey;
 
 //making passport public
 
 module.exports=passport=>{
-    passport.use(new jwtStrategy(opts,(jwt_payload,done)=>{
+    passport.use(new JwtStrategy(opts,(jwt_payload,done)=>{
         User.findById(jwt_payload.id)
             .then(user=>{
-                if(user)
+                if(user){
                 return done(null,user);
-                else
-                return done(null,false);})  
+            }
+                return done(null,false);
+            })
             .catch(err=>console.log(err));
     }));
 };
