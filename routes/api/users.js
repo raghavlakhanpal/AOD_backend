@@ -17,10 +17,11 @@ const router=express.Router();
 
 // import validation
 const validateRegisterInput = require("../../validation/register");
+const validateLoginInput =require("../../validation/login");
 
 ///////////settig up routes of requests?/////////
 
-//route -> GET/api/users/test
+//route -> GET  /api/users/test
 //description -> connection check
 //secuity ->public
 
@@ -28,7 +29,7 @@ router.get("/test",(req,res)=>{
     res.json({message:"route works!!"})
 })
 
-//route -> post/api/users/register
+//route -> POST  /api/users/register
 //description -> getting register request
 //secuity ->private
 
@@ -82,11 +83,57 @@ bcrypt.genSalt(20,(err, salt)=>{
 });
    
 
+//route -> POST  /api/users/login
+//description -> user login
+//secuity ->private
+
+router.post("/login",(req,res)=>{
+const{errors,isValid}=validateLoginInput(req.body);
+
+if(!isValid) return res.status(400).json(errors);
+
+User.findOne({email:req.body.email}).then(user =>{
+    if(!user){
+        errors.email="User not found!";
+        return res.status(400).json(errors);
+    }
+    
+    else{
+      bcrypt.compare(req.body.password,user.password)
+      .then(isMatch=>{
+        if(isMatch){
+            //create a payload
+            const payload = {
+                id: user.id,
+                name: user.name,
+                avatar: user.avatar
+              };
+            //create signin token
+            jwt.sign(payload,
+                Key.secretOrKey,
+                {expiresIn:3600},
+                (err,token)=>{
+                    res.json({
+                        success:"true",
+                        token:"Bearer" +token
+                    });
+                }
+                );
+        }
+        else{
+            errors.password="password Incorrect";
+            return res.status(400).json(errors)
+        }
+      })  
+
+    }
 
 
+});
+});
 
 
-//route -> post/api/users/allusers
+//route -> POST  /api/users/allusers
 //description -> getting all user info
 //secuity ->public
 

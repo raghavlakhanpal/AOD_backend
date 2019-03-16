@@ -41,6 +41,10 @@ if (validator.isEmpty(data.password)) {
 if (!validator.isLength(data.password, { min: 8, max: 20 })) {
     errors.password = "Password must be at least 8 characters";
 }
+if (!validator.isLength(data.username, { min: 2, max: 20 })) {
+    errors.username = "Username must be between 2-25 characters";
+}
+
 if(validator.isEmpty(data.currentStatus)){
     errors.currentStatus = "Please enter your current status"
 }
