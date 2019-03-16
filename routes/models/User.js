@@ -24,4 +24,5 @@ const newSchema= new Schema({
     githubUsername:{type:String}
 
 });
+
 module.exports=User=mongoose.model("users",newSchema);

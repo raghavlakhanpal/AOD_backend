@@ -82,13 +82,24 @@ bcrypt.genSalt(20,(err, salt)=>{
 });
    
 
-//route -> post/api/users/alluser
+
+
+
+
+//route -> post/api/users/allusers
 //description -> getting all user info
 //secuity ->public
-/* router.get("/allusers",(req,res)=>{
 
+
+router.get("/allusers",(req,res)=>{
+    User.find(function (err,data){
+        if(err) console.log(err);
+        res.json(data);
+    });
     
-}); */
+});
+
+
 
 //making the router accessible to other files
 module.exports=router;
