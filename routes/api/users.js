@@ -1,6 +1,6 @@
 //importig packages
 const express=require("express");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 
@@ -8,8 +8,15 @@ const passport = require("passport");
 const User = require("../models/User");
 const Key = require("../../config/keys");
 
+
+//importing gravatar
+gravatar=require("gravatar");
+
 //settig up router iterface
 const router=express.Router();
+
+// import validation
+const validateRegisterInput = require("../../validation/register");
 
 ///////////settig up routes of requests?/////////
 
@@ -28,8 +35,8 @@ router.get("/test",(req,res)=>{
 router.post("/register",(req,res)=>{
 const{errors,isValid}=validateRegisterInput(req.body);
 
-if (!isValid) 
-    return res.status(400).json(errors);
+/* if (!isValid) 
+    return res.status(400).json(errors); */
 
 User.findOne({email:req.body.email}).then(user =>{
 if(user){
@@ -49,12 +56,13 @@ const newUser = new User({
 name:req.body.name,
 email:req.body.email,
 password:req.body.password,
+avatar: avatar,
 username:req.body.username,
 skills:req.body.skills,
-currentstatus:req.body.currentstatus,
+currentStatus:req.body.currentStatus,
 city:req.body.city,
 state:req.body.state,
-avatar
+country: req.body.country
 });
 
 //encrypting the passwod
@@ -63,14 +71,24 @@ bcrypt.genSalt(20,(err, salt)=>{
     bcrypt.hash(newUser.password,salt,(err,hash)=>{
     if(err) throw err;
     newUser.password=hash;
+    console.log(newUser);
     newUser.save()
     .then(user=>res.json(user))
     .catch(err=>console.log(err));
-});
-});
+    });
+    });
 }
 });
 });
    
+
+//route -> post/api/users/alluser
+//description -> getting all user info
+//secuity ->public
+/* router.get("/allusers",(req,res)=>{
+
+    
+}); */
+
 //making the router accessible to other files
 module.exports=router;

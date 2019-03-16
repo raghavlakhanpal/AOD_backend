@@ -13,13 +13,15 @@ const newSchema= new Schema({
 
     skills:{type:[String],required:true},
 
-    currentstatus:{type:String,max:15,required:true},
+    currentStatus:{type:String,max:15,required:true},
 
     city:{type:String,required:true},
 
     state:{type:String,required:true},
 
-    githubusername:{type:String}
+    country: {type:String, required: true},
+
+    githubUsername:{type:String}
 
 });
 module.exports=User=mongoose.model("users",newSchema);
