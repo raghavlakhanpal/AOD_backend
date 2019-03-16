@@ -9,7 +9,7 @@ const isEmpty=require("./isEmpty");
 module.exports=function validateRegisterInput(data){
 const errors={};
 
-data.name=!isEmpty(data.name)?ata.name:"";
+data.name=!isEmpty(data.name)?data.name:"";
 data.email=!isEmpty(data.email)?data.email:"";
 data.password=!isEmpty(data.password)?data.password:"";
 data.username=!isEmpty(data.username)?data.username:"";
