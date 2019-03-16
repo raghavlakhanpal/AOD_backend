@@ -113,9 +113,9 @@ User.findOne({email:req.body.email}).then(user =>{
                 Key.secretOrKey,
                 {expiresIn:3600},
                 (err,token)=>{
-                    res.json({
+                   return res.json({
                         success:"true",
-                        token:"Bearer" +token
+                        token:"Bearer  " +token
                     });
                 }
                 );
