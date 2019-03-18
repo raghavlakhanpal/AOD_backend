@@ -132,10 +132,14 @@ User.findOne({email:req.body.email}).then(user =>{
 
 
 
-//route -> POST  /api/users/deleteuser
+//route -> DELETE  /api/users/deleteuser
 //description -> deleting the user
 //secuity ->private
-
+router.delete("/deleteuser",(req,res)=>{
+    User.findOneAndDelete({email:req.body.email})
+    .then (res.status(200).json("user has been removed!"))
+    .catch((err)=>{if(err) return err;})
+    });
 
 
 
