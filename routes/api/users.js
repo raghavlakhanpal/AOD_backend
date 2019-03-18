@@ -127,10 +127,16 @@ User.findOne({email:req.body.email}).then(user =>{
       })  
 
     }
+})
+});
 
 
-});
-});
+
+//route -> POST  /api/users/deleteuser
+//description -> deleting the user
+//secuity ->private
+
+
 
 
 //route -> POST  /api/users/allusers
@@ -145,6 +151,7 @@ router.get("/allusers",(req,res)=>{
     });
     
 });
+
 
 
 
